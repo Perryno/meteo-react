@@ -1,5 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
 .App {
   text-align: center;
+  background: linear-gradient(20deg, #3f87a6, #f69d3c);
+  caret-color: transparent;
 }
 
 .App-logo {
@@ -35,4 +39,68 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.top {
+  color: aliceblue;
+  font-weight: 500;
+  margin-top: 20px;
+  line-height: 50px;
+}
+
+.city {
+  font-size: 1.7rem;
+}
+
+.degree {
+  font-size: 4rem;
+}
+
+.search {
+  margin-top: 15px;
+  background-color: #00000065;
+  color: white;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: none;
+  caret-color: white;
+
+  outline: none;
+}
+
+.freccia {
+  color: white;
+  font-size: 5rem;
+  text-shadow: 0px 0px 11px #000000;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+.main {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.box {
+  background-color: #7c7c7c65;
+
+  border-radius: 10px;
+  color: white;
+  padding-bottom: 20px;
+}
+
+.boxName {
+  background-color: #47c0f88e;
+  border-radius: 10px 10px 0 0;
+  font-weight: 700;
+  padding: 5px;
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+.boxStyle {
+  margin: 10px 30px;
+
+  font-weight: 500;
+  text-shadow: 0px 0px 11px #000000;
+  font-size: 1.3rem;
 }

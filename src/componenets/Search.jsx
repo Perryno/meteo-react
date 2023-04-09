@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BsArrowDownCircle } from "react-icons/bs";
 
 function Search() {
   const [inputValue, setInputValue] = useState("");
@@ -9,7 +10,7 @@ function Search() {
       .then((response) => response.json())
       .then((data) =>
         fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${data[0].lat}&lon=${data[0].lon}&appid=70200d1ebae81df48a605815f70456b6`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${data[0].lat}&lon=${data[0].lon}&units=metric&appid=70200d1ebae81df48a605815f70456b6`
         )
           .then((responseTwo) => responseTwo.json())
           .then((datas) => setResponseData(datas))
@@ -18,7 +19,7 @@ function Search() {
   const backgroundImg = () => {
     switch (responseData.weather[0].main) {
       case "Clouds":
-        return "url(https://www.blogsicilia.it/wp-content/uploads/sites/2/2021/12/piogge-maltempo.jpg)";
+        return "url(https://images.hdqwalls.com/wallpapers/cloud-sky-anime-w1.jpg)";
 
       case "Rain":
         return "url(https://c4.wallpaperflare.com/wallpaper/685/445/196/anime-landscape-rainbow-raining-cityscape-wallpaper-preview.jpg)";
@@ -36,12 +37,66 @@ function Search() {
       fetchData();
     }
   };
+
+  const orario = (milliseconds) => {
+    const dateObject = new Date(milliseconds);
+    const hours = dateObject.getHours();
+
+    const minutes = dateObject.getMinutes();
+
+    const formattedTime = `${hours}:${minutes}`;
+    return formattedTime;
+  };
   console.log(responseData);
   return (
     <div className="all" style={responseData && { backgroundImage: backgroundImg() }}>
-      <input type="text" onKeyDown={handleKeyDown} value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-      <button onClick={fetchData}>Fetch Data</button>
-      {responseData && <div>{JSON.stringify(responseData)}</div>}
+      <input
+        className="search"
+        type="text"
+        onKeyDown={handleKeyDown}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+
+      {responseData && (
+        <div>
+          <div className="top">
+            <div className="city d-flex justify-content-center">{responseData.name}</div>
+            <div className="degree d-flex justify-content-center">{Math.round(responseData.main.temp)}&deg;</div>
+            <div className="d-flex justify-content-center gap-3">
+              <div>min {Math.round(responseData.main.temp_min)}&deg;</div>
+              <div>max {Math.round(responseData.main.temp_max)}&deg;</div>
+            </div>
+          </div>
+          <div className="main">
+            <div className="box">
+              <div className="boxName">Wind</div>
+              <div className="d-flex justify-content-center flex-column ">
+                <div className="boxStyle">wind's speed: {responseData.wind.speed} km/h</div>
+                <div>
+                  <BsArrowDownCircle className="freccia" style={{ rotate: `${responseData.wind.deg}deg` }} />
+                </div>
+              </div>
+            </div>
+            <div className="box">
+              <div className="boxName">Sun</div>
+              <div className="d-flex justify-content-center flex-column">
+                <div className="boxStyle">sunrise: {orario(responseData.sys.sunrise)}</div>
+                <div className="boxStyle">sunset: {orario(responseData.sys.sunset)}</div>
+              </div>
+            </div>
+            <div className="box">
+              <div className="boxName">Params</div>
+              <div className="d-flex justify-content-center flex-column">
+                <div className="boxStyle">Sky: {responseData.weather[0].description} </div>
+                <div className="boxStyle">Humidity: {responseData.main.humidity}%</div>
+                <div className="boxStyle">Pressure: {responseData.main.pressure.toLocaleString()} hPa</div>
+                <div className="boxStyle">Visibility: {responseData.visibility / 1000} km</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

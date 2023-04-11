@@ -104,3 +104,11 @@
   text-shadow: 0px 0px 11px #000000;
   font-size: 1.3rem;
 }
+.daysBox {
+  width: 50%;
+}
+
+.bottom {
+  display: flex;
+  justify-content: center;
+}

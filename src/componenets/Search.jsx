@@ -1,21 +1,29 @@
 import React, { useState } from "react";
-import { BsArrowDownCircle } from "react-icons/bs";
+import { BsArrowDownCircle, BsFillSunriseFill, BsFillSunsetFill, BsFillSunFill } from "react-icons/bs";
 
 function Search() {
   const [inputValue, setInputValue] = useState("");
   const [responseData, setResponseData] = useState(null);
+  const [forecastDays, setForecastDays] = useState([]);
 
   const fetchData = () => {
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&appid=70200d1ebae81df48a605815f70456b6`)
+    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&appid=7fe66ff279f740600ab948b1a675c7fe`)
       .then((response) => response.json())
-      .then((data) =>
+      .then((data) => {
         fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${data[0].lat}&lon=${data[0].lon}&units=metric&appid=70200d1ebae81df48a605815f70456b6`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${data[0].lat}&lon=${data[0].lon}&units=metric&appid=7fe66ff279f740600ab948b1a675c7fe`
         )
           .then((responseTwo) => responseTwo.json())
-          .then((datas) => setResponseData(datas))
-      );
+          .then((datas) => setResponseData(datas));
+
+        fetch(
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${data[0].lat}&lon=${data[0].lon}&units=metric&appid=7fe66ff279f740600ab948b1a675c7fe`
+        )
+          .then((newResponse) => newResponse.json())
+          .then((forecastObject) => setForecastDays(forecastObject.list));
+      });
   };
+
   const backgroundImg = () => {
     switch (responseData.weather[0].main) {
       case "Clouds":
@@ -47,6 +55,18 @@ function Search() {
     const formattedTime = `${hours}:${minutes}`;
     return formattedTime;
   };
+  function prossimi5Giorni() {
+    const giorniSettimana = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const oggi = new Date().getDay();
+    const prossimiGiorni = [];
+    for (let i = 1; i <= 5; i++) {
+      const giorno = (oggi + i) % 7;
+      prossimiGiorni.push(giorniSettimana[giorno]);
+    }
+    return prossimiGiorni;
+  }
+
+  console.log(prossimi5Giorni());
   console.log(responseData);
   return (
     <div className="all" style={responseData && { backgroundImage: backgroundImg() }}>
@@ -58,7 +78,7 @@ function Search() {
         onChange={(e) => setInputValue(e.target.value)}
       />
 
-      {responseData && (
+      {responseData && forecastDays && (
         <div>
           <div className="top">
             <div className="city d-flex justify-content-center">{responseData.name}</div>
@@ -81,8 +101,13 @@ function Search() {
             <div className="box">
               <div className="boxName">Sun</div>
               <div className="d-flex justify-content-center flex-column">
-                <div className="boxStyle">sunrise: {orario(responseData.sys.sunrise)}</div>
-                <div className="boxStyle">sunset: {orario(responseData.sys.sunset)}</div>
+                <div className="boxStyle">
+                  <BsFillSunriseFill /> &nbsp; sunrise: {orario(responseData.sys.sunrise)}
+                </div>
+                <div className="boxStyle">
+                  <BsFillSunsetFill />
+                  &nbsp; sunset: {orario(responseData.sys.sunset)}
+                </div>
               </div>
             </div>
             <div className="box">
@@ -92,6 +117,49 @@ function Search() {
                 <div className="boxStyle">Humidity: {responseData.main.humidity}%</div>
                 <div className="boxStyle">Pressure: {responseData.main.pressure.toLocaleString()} hPa</div>
                 <div className="boxStyle">Visibility: {responseData.visibility / 1000} km</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bottom m-5">
+            <div className="box daysBox">
+              <div className="boxName ">Next 5 days</div>
+              <div className="days d-flex justify-content-center gap-3">
+                <div className="d-flex flex-column">
+                  <div>{prossimi5Giorni()[0]}</div>
+                  <div>
+                    <BsFillSunFill />
+                  </div>
+                  {forecastDays[8].weather[0].main} {forecastDays[8].main.temp}&deg;
+                </div>
+                <div className="d-flex flex-column">
+                  <div>{prossimi5Giorni()[1]}</div>
+                  <div>
+                    <BsFillSunFill />
+                  </div>
+                  {forecastDays[16].weather[0].main} {forecastDays[16].main.temp}&deg;
+                </div>
+                <div className="d-flex flex-column">
+                  <div>{prossimi5Giorni()[2]}</div>
+                  <div>
+                    <BsFillSunFill />
+                  </div>
+                  {forecastDays[24].weather[0].main} {forecastDays[24].main.temp}&deg;
+                </div>
+                <div className="d-flex flex-column">
+                  <div>{prossimi5Giorni()[3]}</div>
+                  <div>
+                    <BsFillSunFill />
+                  </div>
+                  {forecastDays[32].weather[0].main} {forecastDays[32].main.temp}&deg;
+                </div>
+                <div className="d-flex flex-column">
+                  <div>{prossimi5Giorni()[4]}</div>
+                  <div>
+                    <BsFillSunFill />
+                  </div>
+                  {forecastDays[39].weather[0].main} {forecastDays[39].main.temp}&deg;
+                </div>
               </div>
             </div>
           </div>

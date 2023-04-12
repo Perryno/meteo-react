@@ -78,7 +78,7 @@ function Search() {
         onChange={(e) => setInputValue(e.target.value)}
       />
 
-      {responseData && forecastDays && (
+      {responseData && forecastDays.length > 0 && (
         <div>
           <div className="top">
             <div className="city d-flex justify-content-center">{responseData.name}</div>
@@ -121,7 +121,7 @@ function Search() {
             </div>
           </div>
 
-          <div className="bottom m-5">
+          <div className="bottom m-2">
             <div className="box daysBox">
               <div className="boxName ">Next 5 days</div>
               <div className="days d-flex justify-content-center gap-3">

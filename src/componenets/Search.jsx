@@ -76,6 +76,7 @@ function Search() {
         onKeyDown={handleKeyDown}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        placeholder="Search for a city..."
       />
 
       {responseData && forecastDays.length > 0 && (

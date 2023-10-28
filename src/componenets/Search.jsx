@@ -122,10 +122,10 @@ function Search() {
             </div>
           </div>
 
-          <div className="bottom m-2">
+          <div className="bottom mt-5">
             <div className="box daysBox">
               <div className="boxName ">Next 5 days</div>
-              <div className="days d-flex justify-content-center gap-3">
+              <div className="days d-flex justify-content-center ">
                 <div className="d-flex flex-column">
                   <div>{prossimi5Giorni()[0]}</div>
                   <div>

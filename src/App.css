@@ -104,7 +104,6 @@
 }
 .daysBox {
   width: 50%;
-  margin-bottom: 3rem;
 }
 
 .bottom {
@@ -143,6 +142,9 @@
   }
   .App {
     background: none;
+  }
+  .daysBox {
+    margin-bottom: 3rem;
   }
 }
 

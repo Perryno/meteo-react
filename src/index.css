@@ -14,8 +14,8 @@ code {
   height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
-  background-size: 110% 100%;
-  animation: slide-background 20s linear infinite;
+  background-size: 120% 100%;
+  animation: slide-background 17s linear infinite;
 }
 @keyframes slide-background {
   0% {
@@ -23,7 +23,7 @@ code {
   }
 
   50% {
-    background-position: -20px 0;
+    background-position: -40px 0;
   }
 
   100% {

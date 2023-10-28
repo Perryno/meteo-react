@@ -104,6 +104,7 @@
 }
 .daysBox {
   width: 50%;
+  margin-bottom: 3rem;
 }
 
 .bottom {
@@ -132,11 +133,16 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    padding-bottom: 20px;
   }
   .App {
     background-size: cover;
     background-repeat: no-repeat;
+  }
+  #root {
+    background: linear-gradient(20deg, #3f87a6, #f69d3c);
+  }
+  .App {
+    background: none;
   }
 }
 
